@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+
+  frontend:
+    container_name: docker_react
+    build:
+      context: frontend    
+      target: development
+    working_dir: /code/frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/code
+      - /code/node_modules
+    networks:
+      backend:
+        ipv4_address: 192.20.0.7
+    environment:
+       - CHOKIDAR_USEPOLLING=true
+
+networks:
+  backend:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.20.0.0/24
